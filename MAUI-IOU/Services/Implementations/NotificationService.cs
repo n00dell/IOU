@@ -2,12 +2,6 @@
 using MAUI_IOU.Models;
 using MAUI_IOU.Services.Interfaces;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Google.Crypto.Tink.Shaded.Protobuf;
 
 namespace MAUI_IOU.Services.Implementations
 {
@@ -36,7 +30,7 @@ namespace MAUI_IOU.Services.Implementations
             {
                 notification.Recipients.AddRange(debt.Student.Guardians);
             }
-            _context.Notification.Add(notification);
+            _context.DebtsNotification.Add(notification);
             await _context.SaveChangesAsync();
         }
         public async Task SendPaymentConfirmation(Payment payment)
@@ -50,7 +44,7 @@ namespace MAUI_IOU.Services.Implementations
                 Debt = payment.Debt,
                 Recipients = new List<User> { payment.Debt.Student, payment.PaidBy}
             };
-            _context.Notification.Add(notification);
+            _context.DebtsNotification.Add(notification);
             await _context.SaveChangesAsync();
         }
         public async Task SendLateFeeNotification(Debt debt, decimal feeAmount)
@@ -68,7 +62,7 @@ namespace MAUI_IOU.Services.Implementations
             {
                 notification.Recipients.AddRange(debt.Student.Guardians);
             }
-            _context.Notification.Add(notification);
+            _context.DebtsNotification.Add(notification);
             await _context.SaveChangesAsync();
         }
 
@@ -84,7 +78,7 @@ namespace MAUI_IOU.Services.Implementations
                 Recipients = new List<User> { debt.Student }
             };
 
-            _context.Notifications.Add(notification);
+            _context.DebtsNotification.Add(notification);
             await _context.SaveChangesAsync();
         }
 

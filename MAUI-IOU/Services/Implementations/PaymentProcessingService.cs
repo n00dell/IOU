@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.ServiceFabric.Services.Communication;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace MAUI_IOU.Services.Implementations
         public async Task<Payment> ProcessPayment(Payment payment)
         {
             if (!await ValidatePayment(payment))
-                throw new ServiceException("PaymentProcessingService", "ProcessPayment", "Invalid Payment");
+                throw new Common.ServiceException("PaymentProcessingService", "ProcessPayment", "Invalid Payment");
 
             AllocatePayment(payment);
             payment.Status = PaymentStatus.Completed;
@@ -40,7 +41,7 @@ namespace MAUI_IOU.Services.Implementations
                 debt.Status = DebtStatus.Paid;
 
             }
-            _context.Debts.Update(debt);
+            _context.Entry(debt).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             
             await _notificationService.SendPaymentConfirmation(payment);
@@ -69,23 +70,23 @@ namespace MAUI_IOU.Services.Implementations
             var schedule = new PaymentSchedule
             {
                 Debt = debt,
-                Frequency = debt.Payments.Frequency,
+                Frequency = debt.PaymentSchedule.Frequency,
                 TotalInstallments = CalculateNumberofInstallments(debt),
-                InstallmentAmount = CalculateInstallatmentAmount(debt)
+                InstallmentAmount = CalculateInstallmentAmount(debt)
             };
             var scheduledPayments = new List<PaymentSchedule>();
             var currentDate = debt.DateIssued;
 
             for (int i = 0; i < schedule.TotalInstallments; i++)
             {
-                scheduledPayments.Add(new ScheduledPayment
+                var nextPayment = new ScheduledPayment
                 {
+                    Id = Guid.NewGuid().ToString(),
                     Schedule = schedule,
-                    DueDate = GetNextPaymentDate(currentDate,schedule.Frequency),
+                    DueDate = GetNextPaymentDate(currentDate, schedule.Frequency),
                     Amount = schedule.InstallmentAmount,
-                    IsPaid = false,
-                });
-                currentDate = scheduledPayments[i].DueDate; 
+                    IsPaid = false
+                }; 
             }
             schedule.ScheduledPayments = scheduledPayments;
             return schedule;
@@ -104,7 +105,7 @@ namespace MAUI_IOU.Services.Implementations
         }
         private int CalculateNumberofInstallments(Debt debt)
         {
-            var totalAmount = debt.PrincipalAmount +
+            var totalAmount = debt.RemainingAmount +
                                                     (debt.InterestType == InterestType.Simple?
                                                     CalculateSimpleInterest(debt):
                                                     CalculateCompoundInterest(debt));
@@ -114,7 +115,7 @@ namespace MAUI_IOU.Services.Implementations
         {
             // Implement your installment calculation logic here
             // This is a simplified example
-            return debt.PrincipalAmount / 12; // Monthly payments over a year
+            return debt.RemainingAmount / 12; // Monthly payments over a year
             
         }
         private DateTime GetNextPaymentDate(DateTime currentDate, PaymentFrequency frequency)
@@ -126,17 +127,17 @@ namespace MAUI_IOU.Services.Implementations
                 PaymentFrequency.Monthly => currentDate.AddMonths(1),
                 PaymentFrequency.Quarterly => currentDate.AddMonths(3),
                 PaymentFrequency.Annually => currentDate.AddYears(1),
-                _ => throw new ServiceException("PaymentProcessingService", "GetNextPaymentDate", "Invalid payment frequency")
+                _ => throw new Common.ServiceException("PaymentProcessingService", "GetNextPaymentDate", "Invalid payment frequency")
             };
         }
         private decimal CalculateSimpleInterest(Debt debt)
         {
-            return debt.PrincipalAmonut * (debt.InterestRate / 100) * 1;
+            return debt.RemainingAmount * (debt.InterestRate / 100) * 1;
         }
         private decimal CalculateCompoundInterest(Debt debt)
         {
             // Implement compound interest calculation
-            return debt.PrincipalAmount * (decimal)Math.Pow(1 + (double)(debt.InterestRate / 100), 1) - debt.PrincipalAmount;
+            return debt.RemainingAmount * (decimal)Math.Pow(1 + (double)(debt.InterestRate / 100), 1) - debt.RemainingAmount;
         }
     }
 }

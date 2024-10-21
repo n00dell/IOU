@@ -1,11 +1,13 @@
-﻿using Android.Telecom;
+﻿
 using MAUI_IOU.Data;
 using MAUI_IOU.Models;
 using MAUI_IOU.Services.Interfaces;
+using MAUI_IOU.Services.Common;
 using Microsoft.Extensions.Logging;
 using Microsoft.ServiceFabric.Services.Communication;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +29,7 @@ namespace MAUI_IOU.Services.Implementations
         }
         public decimal CalculateLateFee(Debt debt) {
             if (debt == null)
-                throw new ArgumentNullException(nameof(debt));
+                throw new Common.ServiceException(nameof(debt));
             var daysLate = (DateTime.Now - debt.DueDate).Days;
 
             if (daysLate <= debt.GracePeriodDays)
@@ -36,9 +38,9 @@ namespace MAUI_IOU.Services.Implementations
             decimal lateFee = debt.LateFeeType switch
             {
                 LateFeeType.Fixed => debt.LateFeeAmount,
-                LateFeeType.Percentage => debt.PrincipalAmount *(debt.LateFeePercentage/ 100),
-                LateFeeType.Both => debt.LateFeeAmount + (debt.PrincipalAmount *(debt.LateFeePercentage/100)),
-                _ => throw new ServiceException("LateFeeService","CalculateLateFee", "Invalid late fee type")
+                LateFeeType.Percentage => debt.RemainingAmount *(debt.LateFeePercentage/ 100),
+                LateFeeType.Both => debt.LateFeeAmount + (debt.RemainingAmount *(debt.LateFeePercentage/100)),
+                _ => throw new Common.ServiceException("LateFeeService","CalculateLateFee", "Invalid late fee type")
             };
             return lateFee;
         }
@@ -67,7 +69,7 @@ namespace MAUI_IOU.Services.Implementations
                 await LogLateFee(debt, latefee);
                 await _notificationService.SendLateFeeNotification(debt, latefee);
 
-                _context.Debts.Update(debt);
+                _context.Entry(debt).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
         }

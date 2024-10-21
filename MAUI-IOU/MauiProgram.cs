@@ -21,7 +21,7 @@ namespace MAUI_IOU
             builder.Services.AddScoped<ILateFeeService, LateFeeService>();
             builder.Services.AddScoped<IPaymentProcessingService, PaymentProcessingService>();
             builder.Services.AddScoped<INotificationService, NotificationService>();
-            builder.Services.AddScoped<IDebtManagementService, DebtManagementService>();
+            
 
 #if DEBUG
             builder.Logging.AddDebug();
