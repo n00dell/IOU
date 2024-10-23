@@ -64,4 +64,10 @@
 		<PackageReference Include="Microsoft.ServiceFabric.Services" Version="7.1.2448" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\DashboardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

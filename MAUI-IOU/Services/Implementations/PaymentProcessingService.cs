@@ -65,8 +65,9 @@ namespace MAUI_IOU.Services.Implementations
             payment.PrincipalPortion = remainingPayment;
             payment.Debt.RemainingAmount -= remainingPayment;
         }
-        public PaymentSchedule GeneratePaymentSchedule(Debt debt)
+        public PaymentSchedule GeneratePaymentSchedule(Payment payment)
         {
+            var debt = payment.Debt;
             var schedule = new PaymentSchedule
             {
                 Debt = debt,
@@ -74,7 +75,7 @@ namespace MAUI_IOU.Services.Implementations
                 TotalInstallments = CalculateNumberofInstallments(debt),
                 InstallmentAmount = CalculateInstallmentAmount(debt)
             };
-            var scheduledPayments = new List<PaymentSchedule>();
+            var scheduledPayments = new List<ScheduledPayment>();
             var currentDate = debt.DateIssued;
 
             for (int i = 0; i < schedule.TotalInstallments; i++)
@@ -87,6 +88,8 @@ namespace MAUI_IOU.Services.Implementations
                     Amount = schedule.InstallmentAmount,
                     IsPaid = false
                 }; 
+                scheduledPayments.Add(nextPayment);
+                currentDate = nextPayment.DueDate;
             }
             schedule.ScheduledPayments = scheduledPayments;
             return schedule;
@@ -102,6 +105,7 @@ namespace MAUI_IOU.Services.Implementations
             {
                 return false;
             }
+            return true;
         }
         private int CalculateNumberofInstallments(Debt debt)
         {
@@ -139,5 +143,7 @@ namespace MAUI_IOU.Services.Implementations
             // Implement compound interest calculation
             return debt.RemainingAmount * (decimal)Math.Pow(1 + (double)(debt.InterestRate / 100), 1) - debt.RemainingAmount;
         }
+
+        
     }
 }

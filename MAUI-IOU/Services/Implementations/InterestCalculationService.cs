@@ -33,5 +33,10 @@ namespace MAUI_IOU.Services.Implementations
         {
             throw new NotImplementedException();
         }
+
+        void IInterestCalculationService.ApplyInterest(Debt debt)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -4,12 +4,31 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MAUI_IOU"
+    xmlns:views ="clr-namespace:MAUI_IOU.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="MAUI_IOU">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <ShellContent
+            Title = "Dashboard"
+            ContentTemplate = "{DataTemplate views:DashboardPage}"
+            Route = "Dashboard"
+         />
+        <!--<ShellContent
+         Title = "Debts"
+         ContentTemplate = "{DataTemplate views:DebtsPage}"
+         Route = "Debts"
+         />
+            <ShellContent
+         Title = "Payments"
+         ContentTemplate = "{DataTemplate views:PaymentsPage}"
+         Route = "Payments"
+         />
+                <ShellContent
+         Title = "Notifications"
+         ContentTemplate = "{DataTemplate views:NotificationsPage}"
+         Route = "Notifications"
+         />-->
+    </TabBar>
 
 </Shell>
