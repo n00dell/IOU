@@ -14,7 +14,7 @@
             ContentTemplate = "{DataTemplate views:DashboardPage}"
             Route = "Dashboard"
          />
-        <!--<ShellContent
+        <ShellContent
          Title = "Debts"
          ContentTemplate = "{DataTemplate views:DebtsPage}"
          Route = "Debts"
@@ -28,7 +28,7 @@
          Title = "Notifications"
          ContentTemplate = "{DataTemplate views:NotificationsPage}"
          Route = "Notifications"
-         />-->
+         />
     </TabBar>
 
 </Shell>
