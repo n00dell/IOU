@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOU", "IOU\IOU.csproj", "{1EAD38C5-80FF-4128-907F-D5F2090EA555}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOU.API", "IOU.API\IOU.API.csproj", "{8CD8A366-9E7D-474A-84A2-8D777A46B0D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1EAD38C5-80FF-4128-907F-D5F2090EA555}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EAD38C5-80FF-4128-907F-D5F2090EA555}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EAD38C5-80FF-4128-907F-D5F2090EA555}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CD8A366-9E7D-474A-84A2-8D777A46B0D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CD8A366-9E7D-474A-84A2-8D777A46B0D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CD8A366-9E7D-474A-84A2-8D777A46B0D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CD8A366-9E7D-474A-84A2-8D777A46B0D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
