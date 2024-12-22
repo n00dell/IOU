@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IOU.Views.DebtsPage"
+             Title="Debts"
+             BackgroundColor="White">
+    <Grid RowDefinitions="Auto" Padding="20">
+    <VerticalStackLayout Grid.Row="0" Spacing="10">
+        <Label Text="My Debts" FontSize="24" FontAttributes="Bold" TextColor="Black"/>
+            <Frame BorderColor="LightGray" Padding="10" Margin="0,0,0,10" BackgroundColor="White">
+                <Grid ColumnDefinitions="*,*">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="Total Debt" FontSize="14" TextColor="Gray"/>
+                        <Label Text="Kes. 25,000" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label Text="Due This Month" FontSize="14" TextColor="Gray"/>
+                        <Label Text="Kes 2,000" FontSize="20" FontAttributes="Bold" TextColor="Red"/>
+                    </VerticalStackLayout>
+                    
+                </Grid>
+            </Frame>
+    </VerticalStackLayout>
+        <!-- Debts List -->
+        <CollectionView Grid.Row="1" Margin="0,10">
+            <CollectionView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Debt 1</x:String>
+                    <x:String>Debt 2</x:String>
+                    <x:String>Debt 3</x:String>
+                </x:Array>
+            </CollectionView.ItemsSource>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,5" BorderColor="LightGray" BackgroundColor="White">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Text="University Student Loan"
+                                   FontAttributes="Bold"
+                                   TextColor="Black"/>
+                            <Label Grid.Column="1" Grid.Row="0"
+                                    Text="Kes 8,500.00"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"/>
+                            <Label Grid.Column="0" Grid.Row="1"
+                                   Text="Issued: Jan 15,2024"
+                                   FontSize="14"
+                                   TextColor="Gray"/>
+                            <Label Grid.Column="1" Grid.Row="1"
+                                   Text="Due: Dec 15, 2024"
+                                   FontSize="14"
+                                   TextColor="Gray"/>
+                            <ProgressBar Grid.ColumnSpan="2" Grid.Row="2"
+                                         Progress="0.3"
+                                         Margin="0,5"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

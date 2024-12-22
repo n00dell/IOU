@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IOU.Views.NotificationsPage"
+             Title="Notifications"
+             BackgroundColor="White">
+    <Grid RowDefinitions="Auto,*" Padding="20">
+        <HorizontalStackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,10">
+            <Label Text="Notifications" FontSize="24" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center"/>
+            <Button Text="Mark all as Read"
+                    BackgroundColor="#007AFF"
+                    TextColor="White"
+                    HeightRequest="40"
+                    VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+        <!-- Notifications List -->
+        <CollectionView Grid.Row="1">
+            <CollectionView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Notification 1</x:String>
+                    <x:String>Notification 2</x:String>
+                    <x:String>Notification 3</x:String>
+                    <x:String>Notification 4</x:String>
+                </x:Array>
+            </CollectionView.ItemsSource>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Delete"
+                                          BackgroundColor="Red"
+                                          />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Frame Margin="0,5" 
+                               BorderColor="LightGray" 
+                               BackgroundColor="#F0F0F0">
+                            <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="Payment due in 5 days for University Student Loan"
+                                       TextColor="Black"
+                                       FontAttributes="Bold"/>
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       Text="Oct 25, 2024 9:30 AM"
+                                       TextColor="Gray"
+                                       FontSize="12"/>
+                            </Grid>
+                        </Frame>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

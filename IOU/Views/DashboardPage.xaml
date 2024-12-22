@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IOU.Views.DashboardPage"
+             Title="Dashboard">
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="10">
+            <Frame BorderColor="Gray" Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Total Outstanding Debt"/>
+                    <Label Text="{Binding TotalDebt, StringFormat='{0:C}'}" FontSize="Large" FontAttributes="Bold"/>
+                </VerticalStackLayout>
+            </Frame>
+            <Frame BorderColor="Gray" Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Next Payment Due"/>
+                    <Label Text="{Binding NextPaymentDate, StringFormat='{0:d}'}"/>
+                    <Label Text="{Binding NextPaymentAmount, StringFormat='{0:C}'}" FontAttributes="Bold"/>
+                </VerticalStackLayout>
+            </Frame>
+            <Frame BorderColor="Gray" Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Recent Activity"/>
+                    <CollectionView ItemsSource="{Binding RecentActivities}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <Label Text="{Binding Description}"/>
+                                    <Label Text="{Binding Date, StringFormat='{0:d}'}" FontSize="Small" TextColor="Gray"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

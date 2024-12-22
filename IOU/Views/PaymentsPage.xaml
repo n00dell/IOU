@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IOU.Views.PaymentsPage"
+             Title="Payments"
+             BackgroundColor="White">
+    <Grid RowDefinitions="Auto,Auto,*" Padding="20">
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0" Spacing="10">
+            <Label Text="Payment History" FontSize="24" FontAttributes="Bold" TextColor="Black"/>
+            <Frame BorderColor="LightGray" Padding="10" Margin="0,0,0,10" BackgroundColor="White">
+                <Grid ColumnDefinitions="*,*">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="Total Paid" FontSize="14" TextColor="Gray"/>
+                        <Label Text="$5,000.00" FontSize="20" FontAttributes="Bold" TextColor="Green"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label Text="Next Payment Due" FontSize="14" TextColor="Gray"/>
+                        <Label Text="Nov 15, 2024" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Frame>
+        </VerticalStackLayout>
+
+        <!-- Filter Section -->
+        <HorizontalStackLayout Grid.Row="1" Spacing="10" Margin="0,0,0,10">
+            <DatePicker />
+            <DatePicker />
+            <Button Text="Filter" 
+                    BackgroundColor="#007AFF"
+                    TextColor="White"/>
+        </HorizontalStackLayout>
+
+        <!-- Payments List -->
+        <CollectionView Grid.Row="2">
+            <CollectionView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Payment 1</x:String>
+                    <x:String>Payment 2</x:String>
+                    <x:String>Payment 3</x:String>
+                    <x:String>Payment 4</x:String>
+                </x:Array>
+            </CollectionView.ItemsSource>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,5" BorderColor="LightGray" BackgroundColor="White">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                            <Label Grid.Column="0" Grid.Row="0"
+                                   Text="University Student Loan"
+                                   FontAttributes="Bold"
+                                   TextColor="Black"/>
+                            <Label Grid.Column="1" Grid.Row="0"
+                                   Text="$850.00"
+                                   FontAttributes="Bold"
+                                   TextColor="Black"/>
+                            <Label Grid.Column="0" Grid.Row="1"
+                                   Text="Oct 15, 2024 2:30 PM"
+                                   FontSize="14"
+                                   TextColor="Gray"/>
+                            <Label Grid.Column="1" Grid.Row="1"
+                                   Text="Paid by: Parent"
+                                   FontSize="14"
+                                   TextColor="Gray"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
