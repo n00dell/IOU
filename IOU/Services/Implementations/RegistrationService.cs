@@ -7,10 +7,12 @@ namespace IOU.Services.Implementations
     {
         public Task<User> Login(string email, string password)
         {
+            var client = new HttpClient();
+            string url = "https://localhost:7010/api/Users/Login";  
             throw new NotImplementedException();
         }
 
-        public Task<User> Register(User user)
+        public void Register(User user)
         {
             throw new NotImplementedException();
         }
