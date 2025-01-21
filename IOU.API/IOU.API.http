@@ -1,6 +1,10 @@
-@IOU.API_HostAddress = http://localhost:5080
+@IOU.API_HostAddress = https://localhost:7010
 
 GET {{IOU.API_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+GET {{IOU.API_HostAddress}}/api/user
 
 ###

@@ -25,4 +25,7 @@
     <FlyoutItem Title="StudentSignUp">
         <ShellContent Title="StudentSignUp" ContentTemplate="{DataTemplate local:StudentSignUpPage}" />
     </FlyoutItem>
+    <FlyoutItem Title="Login">
+        <ShellContent Title="Login" ContentTemplate="{DataTemplate local:Login}" />
+    </FlyoutItem>
 </Shell>
