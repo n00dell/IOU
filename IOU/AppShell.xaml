@@ -4,27 +4,25 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:IOU.Views"
-    Shell.FlyoutBehavior="Disabled"
+    Shell.FlyoutBehavior="{OnPlatform WinUI=Flyout, MacCatalyst=Flyout, Default=Disabled}"
     Title="IOU">
-    <TabBar>
-        <ShellContent
-        Title="Dahsboard"
-        ContentTemplate="{DataTemplate local:DashboardPage}"
-       Route="DashboardPage" />
-
-        <ShellContent
-    Title="Debts"
-    ContentTemplate="{DataTemplate local:DebtsPage}"
-    Route="DebtsPage" />
-
-        <ShellContent
-    Title="Notifications"
-    ContentTemplate="{DataTemplate local:NotificationsPage}"
-    Route="NotificationsPage" />
-
-        <ShellContent
-    Title="Payments"
-    ContentTemplate="{DataTemplate local:PaymentsPage}"
-    Route="PaymentsPage" />
-    </TabBar>
+    
+    <FlyoutItem Title="Dashboard">
+        <ShellContent ContentTemplate="{DataTemplate local:DashboardPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Debts">
+        <ShellContent Title="Debts" ContentTemplate="{DataTemplate local:DebtsPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Payments">
+        <ShellContent Title="Payments" ContentTemplate="{DataTemplate local:PaymentsPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="SignUp">
+        <ShellContent Title="SignUp" ContentTemplate="{DataTemplate local:SignUp}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Notifications">
+        <ShellContent Title="Notifications" ContentTemplate="{DataTemplate local:NotificationsPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="StudentSignUp">
+        <ShellContent Title="StudentSignUp" ContentTemplate="{DataTemplate local:StudentSignUpPage}" />
+    </FlyoutItem>
 </Shell>
