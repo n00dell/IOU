@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IOU.Views.SignUp"
+             Title="SignUp">
+    <VerticalStackLayout>
+        <Grid HorizontalOptions="Center" VerticalOptions="Center" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Label Text="Welcome to IOU" FontSize="40" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="Aquamarine"/>
+            </Grid>
+            <Grid Grid.Row="1" Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <!--labels-->
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <Label Text="Fullname:" FontSize="20"/>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <Label Text="Email:" FontSize="20"/>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="2">
+                    <Label Text="Password:" FontSize="20"/>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="3">
+                    <Label Text="PhoneNumber:" FontSize="20"/>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="4">
+                    <Label Text="User Type:" FontSize="20"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <Entry Placeholder="FullName" WidthRequest="500" />
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <Entry Placeholder="Email" />
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="2">
+                    <Entry Placeholder="Password" IsPassword="True"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="3">
+                    <Entry Placeholder="PhoneNumber" />
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="4">
+                    <!--<Label Text="{Binding Source={x:Reference picker}, Path=SelectedItem}"/>-->
+                    <Picker Title="user type"
+                            x:Name="userPicker" 
+                            SelectedIndexChanged="userPicker_SelectedIndexChanged"
+                            ItemsSource="{Binding UserPickerTypes}"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2" Margin="40">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Label Text="Already have an account? Login" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    
+                    <Button Text="Next"
+                            WidthRequest="100"
+                            x:Name="nextButton"
+                            Clicked="Signup_Clicked"
+                            IsEnabled="False"/>
+                </Grid>
+            </Grid>
+
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,6 +1,8 @@
-﻿namespace IOU.API.Models
+﻿
+
+namespace IOU.Models
 {
-    public class PaymentSchedule
+    class PaymentSchedule
     {
         public string Id { get; set; }
 

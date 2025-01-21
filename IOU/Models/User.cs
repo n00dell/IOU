@@ -1,16 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace IOU.API.Models
+namespace IOU.Models
 {
-    public class User
+    class User
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
         [Required]
         public string FullName { get; set; }
         [Required]
-        public string Password { get; set; }
-        [Required]
         public string Email { get; set; }
+        [Required]
+        public string Password { get; set; }
         [Phone]
         public string PhoneNumber { get; set; }
 
@@ -28,3 +33,4 @@ namespace IOU.API.Models
         Administrator
     }
 }
+

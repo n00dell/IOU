@@ -5,20 +5,24 @@
              Title="Dashboard">
     <ScrollView>
         <VerticalStackLayout Spacing="10" Padding="10">
-            <Frame BorderColor="Gray" Padding="10">
-                <VerticalStackLayout>
-                    <Label Text="Total Outstanding Debt"/>
-                    <Label Text="{Binding TotalDebt, StringFormat='{0:C}'}" FontSize="Large" FontAttributes="Bold"/>
-                </VerticalStackLayout>
-            </Frame>
-            <Frame BorderColor="Gray" Padding="10">
+            <Border BackgroundColor="Gray" Padding="10">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Text="Total Outstanding Debt" FontAttributes="Bold" FontSize="20"/>
+                    <Label Grid.Row="1" Text="Amount:" FontAttributes="Bold" FontSize="30"/>
+                </Grid>
+            </Border>
+            <Border BackgroundColor="Gray" Padding="10">
                 <VerticalStackLayout>
                     <Label Text="Next Payment Due"/>
                     <Label Text="{Binding NextPaymentDate, StringFormat='{0:d}'}"/>
                     <Label Text="{Binding NextPaymentAmount, StringFormat='{0:C}'}" FontAttributes="Bold"/>
                 </VerticalStackLayout>
-            </Frame>
-            <Frame BorderColor="Gray" Padding="10">
+            </Border>
+            <Border BackgroundColor="Gray" Padding="10">
                 <VerticalStackLayout>
                     <Label Text="Recent Activity"/>
                     <CollectionView ItemsSource="{Binding RecentActivities}">
@@ -32,7 +36,7 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

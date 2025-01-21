@@ -1,6 +1,7 @@
-﻿namespace IOU.API.Models
+﻿
+namespace IOU.Models
 {
-    public class Student : User
+    class Student: User
     {
         public string StudentId { get; set; }
         public string University { get; set; }
