@@ -1,9 +1,14 @@
-﻿namespace IOU
+﻿using IOU.Models;
+
+namespace IOU
 {
     public partial class App : Application
     {
+        public static User user;
         public App()
         {
+            //App.Current.UserAppTheme = AppTheme.Dark;
+            //App.Current.UserAppTheme = AppTheme.Light;
             InitializeComponent();
         }
 

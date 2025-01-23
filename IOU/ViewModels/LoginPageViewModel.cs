@@ -1,12 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using IOU.Models;
 using IOU.Services.Implementations;
 using IOU.Services.Interfaces;
+using IOU.Views;
+using Newtonsoft.Json;
 
 
 namespace IOU.ViewModels
 {
-    partial class LoginPageViewModel : ObservableObject
+    public partial class LoginPageViewModel : ObservableObject
     {
         [ObservableProperty]
         private string _email;
@@ -19,6 +22,36 @@ namespace IOU.ViewModels
         [RelayCommand]
         public async void Login()
         {
+            try
+            {
+                if (!string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password))
+                {
+                    User user = await registrationService.Login(Email, Password);
+                    if (user != null)
+                    {
+                        Preferences.Set(nameof(App.user), JsonConvert.SerializeObject(user));
+
+                        // Navigate to the DashboardPage and pass FullName as a query parameter
+                        await Shell.Current.GoToAsync(nameof(DashboardPage));
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlert("Error", "Invalid Email or Password", "Ok");
+                        return;
+                    }
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Error", "Email and Password are required", "Ok");
+                    return;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
+                return;
+            }
         }
     }
 }

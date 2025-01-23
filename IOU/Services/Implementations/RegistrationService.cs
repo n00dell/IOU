@@ -13,11 +13,11 @@ namespace IOU.Services.Implementations
                 var client = new HttpClient();
                 string url = "https://localhost:7010/api/user/login";
                 client.BaseAddress = new Uri(url);
-                HttpResponseMessage response = await client.GetAsync(client.BaseAddress);
+                HttpResponseMessage response = await client.GetAsync($"?email={email}&password={password}");
                 if (response.IsSuccessStatusCode)
                 {
                     User user = await response.Content.ReadFromJsonAsync<User>();
-                    return await Task.FromResult(user);
+                    return user;
                 }
                 else
                 {

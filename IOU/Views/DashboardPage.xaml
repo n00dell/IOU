@@ -5,6 +5,11 @@
              Title="Dashboard">
     <ScrollView>
         <VerticalStackLayout Spacing="10" Padding="10">
+            <!-- User's Full Name Display -->
+            <Label Text="{Binding FullName}"
+               FontSize="24"
+               HorizontalTextAlignment="Center"
+               TextColor="#0078D7" />
             <Border BackgroundColor="Gray" Padding="10">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
