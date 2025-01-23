@@ -70,7 +70,7 @@
                     <Label Text="Already have an account? Login" />
                 </Grid>
                 <Grid Grid.Row="1">
-                    
+
                     <Button Text="Next"
                             WidthRequest="100"
                             x:Name="nextButton"

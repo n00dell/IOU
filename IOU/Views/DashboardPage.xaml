@@ -2,41 +2,65 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="IOU.Views.DashboardPage"
-             Title="Dashboard">
+             Title="Dashboard"
+             BackgroundColor="#F4F4F4">
     <ScrollView>
-        <VerticalStackLayout Spacing="10" Padding="10">
+        <VerticalStackLayout Spacing="20" Padding="20">
+
             <!-- User's Full Name Display -->
-            <Label Text="{Binding FullName}"
-               FontSize="24"
-               HorizontalTextAlignment="Center"
-               TextColor="#0078D7" />
-            <Border BackgroundColor="Gray" Padding="10">
-                <Grid Margin="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Text="Total Outstanding Debt" FontAttributes="Bold" FontSize="20"/>
-                    <Label Grid.Row="1" Text="Amount:" FontAttributes="Bold" FontSize="30"/>
+            <Frame BackgroundColor="#0078D7" CornerRadius="15" Padding="15" Margin="0,0,0,20">
+                <Label Text="{Binding FullName}"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       TextColor="White" />
+            </Frame>
+
+            <!-- Total Outstanding Debt -->
+            <Frame BackgroundColor="White" CornerRadius="10" Padding="15" >
+                <Grid RowDefinitions="Auto, Auto" ColumnSpacing="10">
+                    <Label Grid.Row="0" Text="Total Outstanding Debt"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#0078D7" />
+                    <Label Grid.Row="1" Text="{Binding TotalDebt, StringFormat='{0:C}'}"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           TextColor="#D9534F" />
                 </Grid>
-            </Border>
-            <Border BackgroundColor="Gray" Padding="10">
+            </Frame>
+
+            <!-- Next Payment Due -->
+            <Frame BackgroundColor="White" CornerRadius="10" Padding="15">
                 <VerticalStackLayout>
-                    <Label Text="Next Payment Due"/>
-                    <Label Text="{Binding NextPaymentDate, StringFormat='{0:d}'}"/>
-                    <Label Text="{Binding NextPaymentAmount, StringFormat='{0:C}'}" FontAttributes="Bold"/>
+                    <Label Text="Next Payment Due"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#0078D7" />
+                    <Label Text="{Binding NextPaymentDate, StringFormat='{0:MMM dd, yyyy}'}"
+                           FontSize="16"
+                           TextColor="#333" />
+                    <Label Text="{Binding NextPaymentAmount, StringFormat='{0:C}'}"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="#28A745" />
                 </VerticalStackLayout>
-            </Border>
-            <Border BackgroundColor="Gray" Padding="10">
+            </Frame>
+
+            <!-- Recent Activity -->
+            <Border BackgroundColor="White" Padding="15">
                 <VerticalStackLayout>
-                    <Label Text="Recent Activity"/>
-                    <CollectionView ItemsSource="{Binding RecentActivities}">
+                    <Label Text="Recent Activity"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#0078D7" />
+                    <CollectionView ItemsSource="{Binding RecentActivities}" Margin="0,10,0,0">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <StackLayout>
-                                    <Label Text="{Binding Description}"/>
-                                    <Label Text="{Binding Date, StringFormat='{0:d}'}" FontSize="Small" TextColor="Gray"/>
-                                </StackLayout>
+                                <Grid ColumnDefinitions="*, Auto" Padding="5">
+                                    <Label Text="{Binding Description}" FontSize="14" TextColor="#333" />
+                                    <Label Text="{Binding Date, StringFormat='{0:MMM dd, yyyy}'}" FontSize="12" TextColor="Gray" HorizontalTextAlignment="End" />
+                                </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>

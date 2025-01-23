@@ -26,17 +26,27 @@ namespace IOU.ViewModels
             {
                 if (!string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password))
                 {
-                    User user = await registrationService.Login(Email, Password);
-                    if (user != null)
+                    
+                    if (!string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password))
                     {
-                        Preferences.Set(nameof(App.user), JsonConvert.SerializeObject(user));
-
-                        // Navigate to the DashboardPage and pass FullName as a query parameter
-                        await Shell.Current.GoToAsync(nameof(DashboardPage));
+                        User user = await registrationService.Login(Email, Password);
+                        if (user != null)
+                        {
+                            
+                            var appShell = (AppShell)Shell.Current;
+                            appShell.SetFullName(user.FullName);
+                            // Navigate to the DashboardPage and pass FullName as a query parameter
+                            await Shell.Current.GoToAsync(nameof(DashboardPage));
+                        }
+                        else
+                        {
+                            await Shell.Current.DisplayAlert("Error", "Invalid Email or Password", "Ok");
+                            return;
+                        }
                     }
                     else
                     {
-                        await Shell.Current.DisplayAlert("Error", "Invalid Email or Password", "Ok");
+                        await Shell.Current.DisplayAlert("Error", "Email and Password are required", "Ok");
                         return;
                     }
                 }

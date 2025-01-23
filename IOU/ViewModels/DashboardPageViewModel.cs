@@ -10,12 +10,5 @@ namespace IOU.ViewModels
         [ObservableProperty]
         private DateTime _dueDate;
 
-        //[ObservableProperty]
-        //[QueryProperty("FullName","FullName")]
-        //private string fullName;
-        //public DashboardPageViewModel()
-        //{
-        //    // You can log the FullName here to confirm it's passed correctly
-        //}
     }
 }

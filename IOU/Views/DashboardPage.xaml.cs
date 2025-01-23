@@ -10,10 +10,4 @@ public partial class DashboardPage : ContentPage
     {
         InitializeComponent();
     }
-    //public string FullName { get; set; }
-    //protected override void OnAppearing()
-    //{
-    //    base.OnAppearing();
-    //    FullNameLabel.Text = FullName;
-    //}
 }
