@@ -1,4 +1,6 @@
-﻿using IOU.ViewModels;
+﻿using IOU.Services.Implementations;
+using IOU.Services.Interfaces;
+using IOU.ViewModels;
 using IOU.Views;
 using Microsoft.Extensions.Logging;
 
@@ -19,6 +21,9 @@ namespace IOU
            builder.Services.AddSingleton<Login>();
            builder.Services.AddSingleton<DashboardPage>();
             builder.Services.AddSingleton<LoginPageViewModel>();
+            builder.Services.AddSingleton<IRegistrationService, RegistrationService>();
+            builder.Services.AddTransient<SignUpPageViewModel>();
+            builder.Services.AddTransient<SignUp>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

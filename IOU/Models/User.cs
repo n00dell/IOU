@@ -22,6 +22,7 @@ namespace IOU.Models
     }
     public enum UserType
     {
+        None,
         Student,
         Guardian,
         Lender,

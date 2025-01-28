@@ -1,84 +1,133 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:IOU.Models"
              x:Class="IOU.Views.SignUp"
-             Title="SignUp">
-    <VerticalStackLayout>
-        <Grid HorizontalOptions="Center" VerticalOptions="Center" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Label Text="Welcome to IOU" FontSize="40" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="Aquamarine"/>
-            </Grid>
-            <Grid Grid.Row="1" Margin="20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <!--labels-->
-                <Grid Grid.Column="0" Grid.Row="0">
-                    <Label Text="Fullname:" FontSize="20"/>
-                </Grid>
-                <Grid Grid.Column="0" Grid.Row="1">
-                    <Label Text="Email:" FontSize="20"/>
-                </Grid>
-                <Grid Grid.Column="0" Grid.Row="2">
-                    <Label Text="Password:" FontSize="20"/>
-                </Grid>
-                <Grid Grid.Column="0" Grid.Row="3">
-                    <Label Text="PhoneNumber:" FontSize="20"/>
-                </Grid>
-                <Grid Grid.Column="0" Grid.Row="4">
-                    <Label Text="User Type:" FontSize="20"/>
-                </Grid>
-                <Grid Grid.Column="1" Grid.Row="0">
-                    <Entry Placeholder="FullName" WidthRequest="500" />
-                </Grid>
-                <Grid Grid.Column="1" Grid.Row="1">
-                    <Entry Placeholder="Email" />
-                </Grid>
-                <Grid Grid.Column="1" Grid.Row="2">
-                    <Entry Placeholder="Password" IsPassword="True"/>
-                </Grid>
-                <Grid Grid.Column="1" Grid.Row="3">
-                    <Entry Placeholder="PhoneNumber" />
-                </Grid>
-                <Grid Grid.Column="1" Grid.Row="4">
-                    <!--<Label Text="{Binding Source={x:Reference picker}, Path=SelectedItem}"/>-->
-                    <Picker Title="user type"
-                            x:Name="userPicker" 
-                            SelectedIndexChanged="userPicker_SelectedIndexChanged"
-                            ItemsSource="{Binding UserPickerTypes}"/>
-                </Grid>
-            </Grid>
-            <Grid Grid.Row="2" Margin="40">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Label Text="Already have an account? Login" />
-                </Grid>
-                <Grid Grid.Row="1">
+             Title="Sign Up">
 
-                    <Button Text="Next"
-                            WidthRequest="100"
-                            x:Name="nextButton"
-                            Clicked="Signup_Clicked"
-                            IsEnabled="False"/>
-                </Grid>
-            </Grid>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="HeightRequest" Value="45" />
+                <Setter Property="Margin" Value="0,5,0,15" />
+            </Style>
 
-        </Grid>
-    </VerticalStackLayout>
+            <Style x:Key="LabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Margin" Value="0,0,0,5" />
+            </Style>
+
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="BackgroundColor" Value="#2563EB" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Margin" Value="0,10" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+            <!-- Base Form Fields -->
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Full Name" 
+                       Style="{StaticResource LabelStyle}" />
+                <Entry Text="{Binding FullName}"
+                       Style="{StaticResource EntryStyle}"
+                       Placeholder="Enter your full name" />
+
+                <Label Text="Email" 
+                       Style="{StaticResource LabelStyle}" />
+                <Entry Text="{Binding Email}"
+                       Style="{StaticResource EntryStyle}"
+                       Keyboard="Email"
+                       Placeholder="your@email.com" />
+
+                <Label Text="Password" 
+                       Style="{StaticResource LabelStyle}" />
+                <Entry Text="{Binding Password}"
+                       Style="{StaticResource EntryStyle}"
+                       IsPassword="True"
+                       Placeholder="Create a password" />
+
+                <Label Text="Phone Number" 
+                       Style="{StaticResource LabelStyle}" />
+                <Entry Text="{Binding PhoneNumber}"
+                       Style="{StaticResource EntryStyle}"
+                       Keyboard="Telephone"
+                       Placeholder="Enter phone number" />
+            </VerticalStackLayout>
+
+            <!-- User Type Selection -->
+            <Label Text="Select User Type" 
+                   Style="{StaticResource LabelStyle}" />
+           
+            <Picker SelectedItem="{Binding SelectedUserType, Mode=TwoWay}"
+        ItemsSource="{Binding UserTypes}"
+        Margin="0,5,0,15"
+        HeightRequest="45">
+            </Picker>
+
+            <!-- Dynamic Form Fields -->
+            <!-- Student Fields -->
+            <VerticalStackLayout IsVisible="{Binding IsStudent}">
+                <BoxView HeightRequest="1" 
+                        Color="#E5E7EB" 
+                        Margin="0,10" />
+
+                <Label Text="Student ID" 
+                       Style="{StaticResource LabelStyle}" />
+                <Entry Text="{Binding StudentId}"
+                       Style="{StaticResource EntryStyle}"
+                       Placeholder="Enter student ID" />
+
+                <Label Text="University" 
+                       Style="{StaticResource LabelStyle}" />
+                <Entry Text="{Binding University}"
+                       Style="{StaticResource EntryStyle}"
+                       Placeholder="Enter university" />
+
+                <Label Text="Expected Graduation Date" 
+                       Style="{StaticResource LabelStyle}" />
+                <DatePicker Date="{Binding ExpectedGraduationDate}" />
+            </VerticalStackLayout>
+
+            <!-- Lender Fields -->
+            <VerticalStackLayout IsVisible="{Binding IsLender}">
+                <BoxView HeightRequest="1" 
+                        Color="#E5E7EB" 
+                        Margin="0,10" />
+
+                <Label Text="Lender ID" 
+                       Style="{StaticResource LabelStyle}" />
+                <Entry Text="{Binding LenderId}"
+                       Style="{StaticResource EntryStyle}"
+                       Placeholder="Enter lender ID" />
+
+                <Label Text="Institution Name" 
+                       Style="{StaticResource LabelStyle}" />
+                <Entry Text="{Binding InstitutionName}"
+                       Style="{StaticResource EntryStyle}"
+                       Placeholder="Enter institution name" />
+            </VerticalStackLayout>
+
+            <!-- Guardian Fields -->
+            <VerticalStackLayout IsVisible="{Binding IsGuardian}">
+                <BoxView HeightRequest="1" 
+                        Color="#E5E7EB" 
+                        Margin="0,10" />
+
+                <Label Text="Student Id of your child" 
+                       Style="{StaticResource LabelStyle}" />
+                <Entry Text="{Binding StudentId}"
+                       Style="{StaticResource EntryStyle}"
+                       Placeholder="Enter StudentId" />
+            </VerticalStackLayout>
+
+            <!-- Sign Up Button -->
+            <Button Text="Create Account"
+                    Style="{StaticResource ButtonStyle}"
+                    Command="{Binding SignUpCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

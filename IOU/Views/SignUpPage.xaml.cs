@@ -1,31 +1,28 @@
 namespace IOU.Views;
 using Microsoft.Maui.Controls;
+using IOU.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+
 
 public partial class SignUp : ContentPage
 {
-    private string _selectedUserType;
-   public SignUp()
+   
+    public SignUp(SignUpPageViewModel viewModel)
     {
         InitializeComponent();
 
-        userPicker.ItemsSource = new List<string> { "Student", "Parent" };
-    }
-    private async void Signup_Clicked(object sender, EventArgs e)
-    {
-        if(_selectedUserType == "Student")
-        {
-            await Navigation.PushAsync(new StudentSignUpPage());
-        }
-        
+        BindingContext = viewModel;
     }
 
-    private void userPicker_SelectedIndexChanged(object sender, EventArgs e)
+    protected override void OnAppearing()
     {
-        var picker = sender as Picker;
-        if (picker != null && picker.SelectedItem!= null)
+        base.OnAppearing();
+        if (BindingContext is SignUpPageViewModel viewModel)
         {
-            _selectedUserType = picker.SelectedItem.ToString();
-            nextButton.IsEnabled= !string.IsNullOrEmpty(_selectedUserType);
+            viewModel.Email = string.Empty;
+            viewModel.FullName = string.Empty;
+            viewModel.PhoneNumber = string.Empty;
+            viewModel.Password = string.Empty;
         }
     }
 }

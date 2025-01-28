@@ -44,9 +44,6 @@
     <FlyoutItem Title="Sign Up" Icon="signup.png">
         <ShellContent ContentTemplate="{DataTemplate local:SignUp}" />
     </FlyoutItem>
-    <FlyoutItem Title="Student Sign Up" Icon="student_signup_icon.png">
-        <ShellContent ContentTemplate="{DataTemplate local:StudentSignUpPage}" />
-    </FlyoutItem>
     <FlyoutItem Title="Login" Icon="login.png">
         <ShellContent ContentTemplate="{DataTemplate local:Login}" />
     </FlyoutItem>
