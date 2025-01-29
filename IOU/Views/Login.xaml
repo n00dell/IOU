@@ -58,7 +58,7 @@
             Padding="10"
             HorizontalOptions="Fill"
             Command="{Binding LoginCommand}"
-            Clicked="Login_Clicked" />
+             />
 
         <!-- Additional Links -->
         <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">

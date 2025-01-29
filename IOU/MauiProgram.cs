@@ -3,6 +3,7 @@ using IOU.Services.Interfaces;
 using IOU.ViewModels;
 using IOU.Views;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace IOU
 {
@@ -27,7 +28,12 @@ namespace IOU
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
+            IServiceCollection services = builder.Services;
 
+            services.AddSerilog(new LoggerConfiguration()
+                .WriteTo.Debug()
+                .WriteTo.File(Path.Combine(FileSystem.Current.AppDataDirectory, "log.txt"))
+                .CreateLogger());
             return builder.Build();
         }
     }

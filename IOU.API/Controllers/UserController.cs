@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using IOU.API.Data;
 using IOU.API.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 
 namespace IOU.API.Controllers
 {
@@ -73,24 +75,37 @@ namespace IOU.API.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            _context.Users.Add(user);
-            try
+            if (!ModelState.IsValid)
             {
-                await _context.SaveChangesAsync();
+                return BadRequest(ModelState);
             }
-            catch (DbUpdateException)
+            if(string.IsNullOrEmpty(user.Email)|| string.IsNullOrEmpty(user.Password))
             {
-                if (UserExists(user.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest("Email and Password are required");
             }
+            if (await _context.Users.AnyAsync(u => u.Email == user.Email))
+            {
+                return Conflict("Email already exists");
+            }
+            user.Password = HashPassword(user.Password);
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            user.Id = Guid.NewGuid().ToString();
+            user.CreatedDate = DateTime.Now;
+            user.IsActive = true;
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetUser", new { id = user.Id }, new
+            {
+                user.Id,
+                user.FullName,
+                user.Email,
+                user.PhoneNumber,
+                user.CreatedDate,
+                user.IsActive,
+                user.UserType
+            });
         }
 
         // DELETE: api/User/5
@@ -117,12 +132,38 @@ namespace IOU.API.Controllers
         [HttpGet("login")]
         public async Task<IActionResult> Login([FromQuery]string email,[FromQuery] string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
-            if (user == null)
+            Console.WriteLine($"Email:{email}, Password: {password}");
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if(user==null)
             {
-                return NotFound();
+                Console.WriteLine("User not found");
+                return NotFound("Invalid email or password");
             }
-            return Ok(user);
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+
+            Console.WriteLine($"Password valid: {isPasswordValid}");
+
+            if (!isPasswordValid)
+            {
+                return NotFound("Invalid email or password");
+            }
+            return Ok(new
+            {
+                user.Id,
+                user.FullName,
+                user.Email,
+                user.PhoneNumber,
+                user.CreatedDate,
+                user.IsActive,
+                user.UserType
+            });
+        }
+
+        
+        private string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
     }
 }

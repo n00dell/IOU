@@ -10,8 +10,4 @@ public partial class Login : ContentPage
         BindingContext = vm;
     }
 
-    private void Login_Clicked(object sender, EventArgs e)
-    {
-
-    }
 }

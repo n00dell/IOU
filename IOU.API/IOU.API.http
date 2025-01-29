@@ -8,3 +8,9 @@ Accept: application/json
 GET {{IOU.API_HostAddress}}/api/user
 
 ###
+
+@email=string
+@password=string
+GET {{IOU.API_HostAddress}}/api/user/login?email={{email}}&password={{password}}
+
+###

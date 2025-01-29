@@ -20,6 +20,7 @@ namespace IOU.ViewModels
                 UserType.Lender
             };
             SelectedUserType = UserType.Student;
+            ExpectedGraduationDate = DateTime.Today;
             UpdateVisibility();
         }
 
