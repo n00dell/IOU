@@ -2,7 +2,7 @@
 
 namespace IOU.Models
 {
-    class LateFeeLog
+    public class LateFeeLog
     {
         public string Id { get; set; }
         public Debt Debt { get; set; }

@@ -22,7 +22,7 @@ namespace IOU.Services.Implementations
                 string encodedEmail = Uri.EscapeDataString(email);
                 string encodedPassword = Uri.EscapeDataString(password);
                 string url = $"api/user/login?email={encodedEmail}&password={encodedPassword}";
-                string fullurl = $"{_client.BaseAddress}{url}" ;
+                string fullurl = $"{_client.BaseAddress}{url}";
                 _logger.LogInformation($"Attempting login request to: {fullurl}");
                 HttpResponseMessage response = await _client.GetAsync(url);
                 _logger.LogInformation($"Response status code: {response.StatusCode}");
@@ -49,7 +49,7 @@ namespace IOU.Services.Implementations
                     await Shell.Current.DisplayAlert("Error", rawResponse, "Ok");
                     return null;
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -72,7 +72,72 @@ namespace IOU.Services.Implementations
                     return false;
                 }
                 return true;
-               
+
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
+                return false;
+            }
+        }
+        public async Task<bool> RegisterStudent(Student student)
+        {
+            try
+            {
+                HttpResponseMessage response = await _client.PostAsJsonAsync("api/student", student);
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorResponse = await response.Content.ReadAsStringAsync();
+                    await Shell.Current.DisplayAlert("Error", errorResponse, "Ok");
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
+                return false;
+            }
+        }
+
+        public async Task<bool> RegisterGuardian(Guardian guardian, StudentGuardian studentGuardian)
+        {
+            try
+            {
+                HttpResponseMessage response = await _client.PostAsJsonAsync("api/guardian", guardian);
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorResponse = await response.Content.ReadAsStringAsync();
+                    await Shell.Current.DisplayAlert("Error", errorResponse, "Ok");
+                    return false;
+                }
+                HttpResponseMessage response2 = await _client.PostAsJsonAsync("api/studentguardian", studentGuardian);
+                if (!response2.IsSuccessStatusCode)
+                {
+                    string errorResponse = await response2.Content.ReadAsStringAsync();
+                    await Shell.Current.DisplayAlert("Error", errorResponse, "Ok");
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
+                return false;
+            }
+        }
+        public async Task<bool> RegisterLender(Lender lender)
+        {
+            try
+            {
+                HttpResponseMessage response = await _client.PostAsJsonAsync("api/lender", lender);
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorResponse = await response.Content.ReadAsStringAsync();
+                    await Shell.Current.DisplayAlert("Error", errorResponse, "Ok");
+                    return false;
+                }
+                return true;
             }
             catch (Exception ex)
             {

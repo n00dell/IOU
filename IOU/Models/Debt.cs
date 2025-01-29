@@ -2,7 +2,7 @@
 
 namespace IOU.Models
 {
-    class Debt
+   public class Debt
     {
         public string Id { get; set; }
         public decimal Amount { get; set; }

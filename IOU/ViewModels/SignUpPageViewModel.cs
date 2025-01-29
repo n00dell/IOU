@@ -3,15 +3,17 @@ using CommunityToolkit.Mvvm.Input;
 using IOU.Models;
 using IOU.Services.Implementations;
 using IOU.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace IOU.ViewModels
 {
    public partial class SignUpPageViewModel : ObservableObject
     {
         private readonly IRegistrationService _registrationService;
-
-        public SignUpPageViewModel(IRegistrationService registrationService)
+        private readonly ILogger<SignUpPageViewModel> _logger;
+        public SignUpPageViewModel(IRegistrationService registrationService, ILogger<SignUpPageViewModel> logger)
         {
+            _logger = logger;
             _registrationService = registrationService;
             _userTypes = new List<UserType>
             {
@@ -87,61 +89,61 @@ namespace IOU.ViewModels
                 FullName = FullName,
                 Email = Email,
                 Password = Password,
-                PhoneNumber= PhoneNumber
+                PhoneNumber= PhoneNumber,
+                UserType = SelectedUserType
             };
-            switch (SelectedUserType)
-            {
-                case UserType.Student:
-                    var student = new Student
-                    {
-                        Id = user.Id,
-                        FullName = user.FullName,
-                        Email = user.Email,
-                        Password = user.Password,
-                        PhoneNumber = user.PhoneNumber,
-                        University = University,
-                        ExpectedGraduationDate = ExpectedGraduationDate
-                    };
-                    break;
-                case UserType.Guardian:
-                    var guardian = new Guardian
-                    {
-                        Id = user.Id,
-                        FullName = user.FullName,
-                        Email = user.Email,
-                        Password = user.Password,
-                        PhoneNumber = user.PhoneNumber    
-                    };
-                    var studentGuardian = new StudentGuardian
-                    {
-                        GuardianId = guardian.Id,
-                        StudentId = StudentId
-                    };
-                    break;
-                case UserType.Lender:
-                    var lender = new Lender
-                    {
-                        Id = user.Id,
-                        FullName = user.FullName,
-                        Email = user.Email,
-                        Password = user.Password,
-                        PhoneNumber = user.PhoneNumber,
-                        CompanyName = InstitutionName,
-                        BusinessRegistrationNumber = BusinessRegistrationNumber
-                    };
-                    break;
-                case UserType.Administrator:
-                    break;
-            }
             bool isSuccess = await _registrationService.Register(user);
-            if (isSuccess)
+            if (!isSuccess)
             {
+                _logger.LogError("Failed to create user");
+                await Shell.Current.DisplayAlert("Error", "Failed to create user", "OK");
+                return;
+            }
+            try
+            {
+                switch (SelectedUserType)
+                {
+                    case UserType.Student:
+                        var student = new Student
+                        {
+                            Id = user.Id,
+                            StudentId = StudentId,
+                            University = University,
+                            ExpectedGraduationDate = ExpectedGraduationDate
+                        };
+                        await _registrationService.RegisterStudent(student);
+                        break;
+                    case UserType.Guardian:
+                        var guardian = new Guardian
+                        {
+                            Id = user.Id
+                        };
+                        var studentGuardian = new StudentGuardian
+                        {
+                            GuardianId = guardian.Id,
+                            StudentId = StudentId
+                        };
+                        await _registrationService.RegisterGuardian(guardian, studentGuardian);
+                        break;
+                    case UserType.Lender:
+                        var lender = new Lender
+                        {
+                            Id = user.Id,
+                            CompanyName = InstitutionName,
+                            BusinessRegistrationNumber = BusinessRegistrationNumber
+                        };
+                        await _registrationService.RegisterLender(lender);
+                        break;
+                    case UserType.Administrator:
+                        break;
+                }
                 await Shell.Current.DisplayAlert("Success", "User created successfully", "OK");
             }
-            else
+                catch(Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", "Failed to create user", "OK");
+                await Shell.Current.DisplayAlert("Error", "User crated but failed to save additional details", "OK");
             }
+            
              
         }
     }

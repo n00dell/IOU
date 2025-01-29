@@ -1,7 +1,7 @@
 ﻿
 namespace IOU.Models
 {
-    class ScheduledPayment
+    public class ScheduledPayment
     {
         public string Id { get; set; }
         public string ScheduleId { get; set; }

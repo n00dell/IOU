@@ -1,7 +1,7 @@
 ﻿
 namespace IOU.Models
 {
-    class DebtNotification
+   public class DebtNotification
     {
         public string Id { get; set; }
         public string Title { get; set; }

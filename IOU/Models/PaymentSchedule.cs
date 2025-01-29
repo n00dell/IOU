@@ -2,7 +2,7 @@
 
 namespace IOU.Models
 {
-    class PaymentSchedule
+    public class PaymentSchedule
     {
         public string Id { get; set; }
 

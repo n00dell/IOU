@@ -1,7 +1,7 @@
 ﻿
 namespace IOU.Models
 {
-    class Payment
+    public class Payment
     {
         public string Id { get; set; }
         public decimal Amount { get; set; }

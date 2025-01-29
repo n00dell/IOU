@@ -1,7 +1,7 @@
 ﻿
 namespace IOU.Models
 {
-    class Student: User
+    public class Student: User
     {
         public string StudentId { get; set; }
         public string University { get; set; }
