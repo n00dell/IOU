@@ -5,7 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:IOU.Views"
     xmlns:viewmodels="clr-namespace:IOU.ViewModels"
-    x:DataType="viewmodels:AppShellViewModel"
     FlyoutBackgroundColor="#0078D7"
     Title="IOU">
     <!--FlyoutTitle="IOU"

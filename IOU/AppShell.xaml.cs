@@ -18,7 +18,6 @@ namespace IOU
         public AppShell()
         {
             InitializeComponent();
-            BindingContext = new AppShellViewModel();
             BindingContext = this;
             Routing.RegisterRoute(nameof(Login), typeof(Login));
             Routing.RegisterRoute(nameof(DashboardPage), typeof(DashboardPage));
