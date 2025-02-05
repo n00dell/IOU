@@ -4,6 +4,8 @@ using IOU.ViewModels;
 using IOU.Views;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Microsoft.Extensions.Http;
+
 
 namespace IOU
 {
@@ -25,6 +27,8 @@ namespace IOU
             builder.Services.AddSingleton<IRegistrationService, RegistrationService>();
             builder.Services.AddTransient<SignUpPageViewModel>();
             builder.Services.AddTransient<SignUp>();
+
+            
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
@@ -34,6 +38,10 @@ namespace IOU
                 .WriteTo.Debug()
                 .WriteTo.File(Path.Combine(FileSystem.Current.AppDataDirectory, "log.txt"))
                 .CreateLogger());
+            builder.Services.AddHttpClient<IRegistrationService, RegistrationService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7010/");
+            });
             return builder.Build();
         }
     }

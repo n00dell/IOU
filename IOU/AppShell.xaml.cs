@@ -23,6 +23,7 @@ namespace IOU
             Routing.RegisterRoute(nameof(DashboardPage), typeof(DashboardPage));
             Routing.RegisterRoute(nameof(NotificationsPage), typeof(NotificationsPage));
             Routing.RegisterRoute(nameof(PaymentsPage), typeof(PaymentsPage));
+            Routing.RegisterRoute(nameof(SignUp), typeof(SignUp));
         }
 
         private void Logout_Clicked(object sender, EventArgs e)
